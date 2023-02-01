@@ -1,5 +1,6 @@
 import io
 import json
+import os
 import platform
 import re
 import sys
@@ -616,6 +617,11 @@ def main(  # noqa: C901
         out(error_msg if report.return_code else "All done! ✨ 🍰 ✨")
         if code is None:
             click.echo(str(report), err=True)
+
+    github_output = os.environ.get("GITHUB_OUTPUT", None)
+    if github_output:
+        report.write_github_outputs(Path(github_output))
+
     ctx.exit(report.return_code)
 
 

@@ -104,3 +104,18 @@ class Report:
             s = "s" if self.failure_count > 1 else ""
             report.append(style(f"{self.failure_count} file{s} {failed}", fg="red"))
         return ", ".join(report) + "."
+
+    def write_github_outputs(self, output: Path) -> None:
+        _outputs = {}
+        _outputs["is-formatted"] = "false"
+        _outputs["change-count"] = str(0)
+        _outputs["same-count"] = str(self.same_count)
+        _outputs["failure-count"] = str(self.failure_count)
+        if not (self.check or self.diff):
+            if self.change_count > 0:
+                _outputs["change-count"] = str(self.change_count)
+                _outputs["is-formatted"] = "true"
+
+        with output.open("a+", encoding="utf-8") as f:
+            for k, v in _outputs.items():
+                f.write(f"{k}={v}\n")

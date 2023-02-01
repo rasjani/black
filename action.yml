@@ -27,6 +27,19 @@ inputs:
     description: 'Python Version specifier (PEP440) - e.g. "21.5b1"'
     required: false
     default: ""
+outputs:
+  is-formatted:
+    description: "Files checked are formatted to the current black formatter style."
+    value: steps
+  change-count:
+    description: "Number of files black changed"
+    value: steps
+  same-count:
+    description: "Number of files that didnt need to be reformatted"
+    value: steps
+  failure-count:
+    description: "Number of files black failed to reformat"
+    value: steps
 branding:
   color: "black"
   icon: "check-circle"
